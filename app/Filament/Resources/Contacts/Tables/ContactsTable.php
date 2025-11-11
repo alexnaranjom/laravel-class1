@@ -6,11 +6,11 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\TrashedFilter;
 use Filament\Actions\Action;
 use Filament\Tables\Table;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
+use App\Models\User;
 
 class ContactsTable
 {
@@ -49,7 +49,8 @@ class ContactsTable
                     ->requiresConfirmation()
                     ->modalHeading('Delete selected contacts')
                     ->modalContent(fn () => 'Are you sure you want to delete the selected contacts? This action cannot be undone.')
-                    ->successNotificationTitle('Contacts deleted'),
+                    ->successNotificationTitle('Contacts deleted')
+                    ->visible(fn (?User $user) => $user?->is_admin ?? false),
             ])
             ->recordActions([
                 Action::make('quick_email')
@@ -59,6 +60,14 @@ class ContactsTable
 
                 ViewAction::make(),
                 EditAction::make(),
+
+                // Delete record action - only visible to admins
+                Action::make('delete')
+                    ->label('Delete')
+                    ->color('danger')
+                    ->requiresConfirmation()
+                    ->action(fn ($record) => $record->delete())
+                    ->visible(fn (?User $user) => $user?->is_admin ?? false),
             ]);
     }
 }

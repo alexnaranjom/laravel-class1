@@ -2,18 +2,18 @@
 
 namespace Tests\Feature;
 
-// use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
     /**
-     * A basic test example.
+     * Ensure the API ping endpoint returns 200 and expected JSON.
      */
-    public function test_the_application_returns_a_successful_response(): void
+    public function test_api_ping_returns_pong()
     {
-        $response = $this->get('/');
+        $response = $this->getJson('/api/ping');
 
-        $response->assertStatus(200);
+        $response->assertOk()
+                 ->assertExactJson(['pong' => true]);
     }
 }
