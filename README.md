@@ -57,3 +57,34 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Filament Admin
+
+Quick notes for the Filament admin panel used in this project.
+
+- Install (install Filament and scaffold the panel):
+
+  ```bash
+  # require Filament
+  composer require filament/filament
+
+  # run the installer and create panels
+  php artisan filament:install --panels
+  ```
+
+- Access
+  - Panel path used in this project: `http://127.0.0.1:8888/alexnar7`
+  - Login URL: `http://127.0.0.1:8888/alexnar7/login`
+
+- Notes
+  - Database: SQLite (database/database.sqlite) is used for local development.
+  - Dev server (simple PHP server):
+
+    ```powershell
+    php -S 127.0.0.1:8888 -t public
+    ```
+
+- Screenshots
+  - public/screens/contacts-list.png
+  - public/screens/contacts-create.png
+  - public/screens/contacts-edit.png
