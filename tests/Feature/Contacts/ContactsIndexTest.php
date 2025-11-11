@@ -9,11 +9,13 @@ class ContactsIndexTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_get_api_contacts_returns_200_and_json()
+    public function test_index_returns_empty_array_initially(): void
     {
-        $response = $this->getJson('/api/contacts');
+        $response = $this->getJson('/api/contacts', [
+            'Accept' => 'application/json',
+        ]);
 
-        $response->assertOk()
-                 ->assertJsonStructure([]);
+        $response->assertOk();
+        $this->assertSame([], $response->json()); // exact empty array
     }
 }
