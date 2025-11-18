@@ -4,14 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use App\Http\Requests\ContactStoreRequest;
 use App\Http\Requests\ContactUpdateRequest;
 
 class ContactController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return response()->json(Contact::latest()->get());
+        $query = Contact::query();
+        if ($search = $request->query('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+                 ->orWhere('phone', 'like', "%{$search}%");
+        });
+        }
+
+        $results = $query->orderBy('created_at', 'desc')->paginate(10); // 10 contacts per page
+
+        return response()->json($results);
     }
 
     public function store(ContactStoreRequest $request): JsonResponse
