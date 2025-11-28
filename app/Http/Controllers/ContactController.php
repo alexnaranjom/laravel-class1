@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests\ContactStoreRequest;
@@ -10,20 +11,15 @@ use App\Http\Requests\ContactUpdateRequest;
 
 class ContactController extends Controller
 {
+    private const PER_PAGE = 10;
+
     public function index(Request $request): JsonResponse
     {
-        $query = Contact::query();
-        if ($search = $request->query('search')) {
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                ->orWhere('email', 'like', "%{$search}%")
-                 ->orWhere('phone', 'like', "%{$search}%");
-        });
-        }
-
-        $results = $query->orderBy('created_at', 'desc')->paginate(10); // 10 contacts per page
-
-        return response()->json($results);
+        return response()->json(
+            $this->contactQuery($request->query('search'))
+                ->orderByDesc('created_at')
+                ->paginate(self::PER_PAGE)
+        );
     }
 
     public function store(ContactStoreRequest $request): JsonResponse
@@ -49,5 +45,17 @@ class ContactController extends Controller
 
         $contact->delete();
         return response()->json(null, 204);
+    }
+
+    private function contactQuery(?string $search): Builder
+    {
+        return Contact::query()
+            ->when($search, function (Builder $builder, string $term): void {
+                $builder->where(function (Builder $inner) use ($term): void {
+                    $inner->where('name', 'like', "%{$term}%")
+                        ->orWhere('email', 'like', "%{$term}%")
+                        ->orWhere('phone', 'like', "%{$term}%");
+                });
+            });
     }
 }
