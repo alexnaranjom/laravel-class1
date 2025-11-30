@@ -1,90 +1,72 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Contacts Mini (API + Admin + Frontend)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A small **Contacts Management** application built with **Laravel 12**, designed as a portfolio project to demonstrate modern PHP practices:
 
-## About Laravel
+- RESTful JSON API (Contacts CRUD)
+- Validation and unique email handling
+- Basic authorization for admin-only actions (policies)
+- Filament admin panel for managing contacts
+- Inertia.js + Vue frontend for searching and browsing contacts
+- Automated tests for key API endpoints and rules
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend:** Laravel 12.x (PHP 8.4, Laravel Herd)
+- **Database:** SQLite (for local development & tests)
+- **Admin UI:** FilamentPHP
+- **Frontend:** Inertia.js + Vue 3
+- **Testing:** PHPUnit (Feature tests for Contacts)
+- **Tools:** Composer, Git, VS Code
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Features
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Create, update, list, and delete contacts via a JSON API
+- Validation on `name`, `email`, and `phone`
+- Unique email constraint with proper update behavior
+- Admin-only delete (using Laravel policies)
+- Filament admin panel to manage contacts in the browser
+- Vue-based contacts page (Inertia) with loading state and search
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Getting Started
 
-### Premium Partners
+### Requirements
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+- PHP 8.4+
+- Composer 2.8+
+- SQLite
+- Laravel Herd (or PHP CLI) installed
 
-## Contributing
+### Installation
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+git clone https://github.com/alexnaranjom/laravel-contacts-api.git
+cd laravel-contacts-api
 
-## Code of Conduct
+cp .env.example .env
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+composer install
+php artisan key:generate
 
-## Security Vulnerabilities
+## Screenshots
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Contacts list view
 
-## License
+![Contacts list view](screenshots/contacts-list.png)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Empty search state
 
-## Filament Admin
+![Empty search state](screenshots/contacts-empty.png)
 
-Quick notes for the Filament admin panel used in this project.
+### Responsive / small screen view
 
-- Install (install Filament and scaffold the panel):
+![Responsive contacts view](screenshots/contacts-responsive.png)
 
-  ```bash
-  # require Filament
-  composer require filament/filament
+### Contacts Pagination
 
-  # run the installer and create panels
-  php artisan filament:install --panels
-  ```
-
-- Access
-  - Panel path used in this project: `http://127.0.0.1:8888/alexnar7`
-  - Login URL: `http://127.0.0.1:8888/alexnar7/login`
-
-- Notes
-  - Database: SQLite (database/database.sqlite) is used for local development.
-  - Dev server (simple PHP server):
-
-    ```powershell
-    php -S 127.0.0.1:8888 -t public
-    ```
-
-- Screenshots
-  - public/screens/contacts-list.png
-  - public/screens/contacts-create.png
-  - public/screens/contacts-edit.png
+![Contacts Paginationcontacts view](screenshots/contacts-pagination.png)
